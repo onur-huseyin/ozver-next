@@ -1,0 +1,4 @@
+supabase database
+
+mail:flyasimsek@gmail.com
+şifre: Admin1415+
