@@ -26,6 +26,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <script src="https://documentcloud.adobe.com/view-sdk/main.js" async></script>
       </head>
       <body
         className={`${inter.variable} font-sans antialiased bg-background text-foreground`}
