@@ -86,7 +86,7 @@ export function AboutTime() {
   ];
   return (
     <div className="relative w-full overflow-clip">
-      <Timeline data={data} />
+      <Timeline />
     </div>
   );
 }
