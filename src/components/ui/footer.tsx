@@ -1,5 +1,4 @@
 import Image from "next/image";
-
 export function Footer() {
   return (
     <footer className="relative min-h-[400px] bg-gradient-to-br from-black via-slate-900 to-blue-900 py-16">
@@ -8,19 +7,18 @@ export function Footer() {
       
       {/* Main Footer Content */}
       <div className="relative z-10 container mx-auto px-4">
-        <div className="bg-slate-800/90 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-8 shadow-2xl">
+        <div className=" backdrop-blur-lg rounded-2xl border border-slate-700/50 p-8 shadow-2xl">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             
             {/* Brand/Logo Section */}
             <div className="flex flex-col items-start space-y-4">
               <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
-                  <div className="w-6 h-6 bg-white rounded-full"></div>
-                </div>
-                <span className="text-white text-xl font-semibold">Özver</span>
+                <span className="text-white text-xl font-semibold">
+                  <Image src="/ozver-mek.png" alt="Özver" width={200} height={200} />
+                </span>
               </div>
               <p className="text-slate-300 text-sm leading-relaxed">
-                1980'den beri mekatronik çözümlerde öncü, kaliteli hizmet ve yenilikçi teknolojilerle sektörde güvenilir partneriniz.
+                1980&apos;den beri mekatronik çözümlerde öncü, kaliteli hizmet ve yenilikçi teknolojilerle sektörde güvenilir partneriniz.
               </p>
             </div>
 

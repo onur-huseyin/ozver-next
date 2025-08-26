@@ -24,6 +24,8 @@ import {
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { Footer } from "@/components/ui/footer";
 import BabylonViewer from "@/components/ui/adobe-pdf-viewer";
+import { TextHoverEffect } from "@/components/ui/text-hover-effect";
+
 
 export default function ProductsPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -47,39 +49,6 @@ export default function ProductsPage() {
         "Debi: 50-100 L/min",
         "Sıcaklık: -10°C ile +90°C",
         "Malzeme: Paslanmaz Çelik",
-      ],
-    },
-    {
-      icon: Zap,
-      title: "Performans",
-      items: [
-        "Yüksek verimlilik: %85+",
-        "Düşük gürültü seviyesi",
-        "Uzun ömürlü tasarım",
-        "Kolay bakım",
-        "Hızlı kurulum",
-      ],
-    },
-    {
-      icon: Shield,
-      title: "Güvenlik",
-      items: [
-        "IP65 koruma sınıfı",
-        "Aşırı yük koruması",
-        "Kuru çalışma koruması",
-        "Termal koruma",
-        "CE sertifikası",
-      ],
-    },
-    {
-      icon: TrendingUp,
-      title: "Avantajlar",
-      items: [
-        "Enerji tasarrufu",
-        "Çevre dostu",
-        "Düşük bakım maliyeti",
-        "Geniş uygulama alanı",
-        "Teknik destek",
       ],
     },
   ];
@@ -153,10 +122,8 @@ export default function ProductsPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h1 className="text-xl md:text-5xl font-bold bg-gradient-to-r from-white via-gray-300 to-gray-400 bg-clip-text text-transparent mt-6">
-            Ürünlerimiz
-          </h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+           <TextHoverEffect text="ÖZVER" />
+          <p className="text-xl lg:text-5xl text-[#969696]  mx-auto leading-relaxed">
             Yüksek kaliteli pompa sistemleri ve endüstriyel çözümler
           </p>
         </motion.div>
@@ -169,9 +136,9 @@ export default function ProductsPage() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="lg:col-span-3"
           >
-            <div className="bg-[#18181B] border border-[#464646] rounded-2xl p-6 h-[600px] relative overflow-hidden">
+            <div className="bg-[#0A0A0A] border border-[#464646] rounded-2xl p-6 h-[600px] relative overflow-hidden">
               <BabylonViewer
-                modelUrl="/models/ozverpompa.gltf"
+                modelUrl="/ozver3d.glb"
                 width="100%"
                 height="600px"
               />
@@ -193,10 +160,7 @@ export default function ProductsPage() {
                     <Star className="w-6 h-6 text-yellow-400" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white">
-                      Ozver Pompa
-                    </h3>
-                    <p className="text-gray-400 text-sm">Premium Kalite</p>
+                    <p className="text-[#969696] text-lg">Premium Kalite</p>
                   </div>
                 </div>
                 <div className="space-y-3">
@@ -232,7 +196,7 @@ export default function ProductsPage() {
                     <div className="w-10 h-10 bg-gradient-to-br from-[#464646] to-[#18181B] rounded-xl flex items-center justify-center">
                       <spec.icon className="w-5 h-5 text-white" />
                     </div>
-                    <h4 className="text-lg font-semibold text-white">
+                    <h4 className="text-lg font-semibold text-[#969696]">
                       {spec.title}
                     </h4>
                   </div>
@@ -259,7 +223,7 @@ export default function ProductsPage() {
         >
           <div className="bg-[#18181B] border border-[#464646] rounded-2xl p-8">
             <h2 className="text-3xl font-bold text-white mb-8 text-center">
-              Neden Ozver Pompa?
+              Neden biz?
             </h2>
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center">
