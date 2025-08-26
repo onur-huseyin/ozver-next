@@ -10,9 +10,13 @@
     "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
+    "@babylonjs/core": "^8.24.0",
+    "@babylonjs/gui": "^8.24.0",
+    "@babylonjs/inspector": "^8.24.0",
+    "@babylonjs/loaders": "^8.24.0",
     "@heroui/card": "^2.2.23",
     "@radix-ui/react-slot": "^1.2.3",
-
+    "@supabase/supabase-js": "^2.56.0",
     "@tabler/icons-react": "^3.34.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -26,7 +30,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwind-merge": "^3.3.1"
-
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

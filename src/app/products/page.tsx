@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { 
-  Settings, 
-  Zap, 
-  Shield, 
-  TrendingUp, 
-  CheckCircle, 
+import {
+  Settings,
+  Zap,
+  Shield,
+  TrendingUp,
+  CheckCircle,
   Star,
 } from "lucide-react";
 import {
@@ -23,12 +23,10 @@ import {
 } from "@/components/ui/resizable-navbar";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { Footer } from "@/components/ui/footer";
-import AdobePDFViewer from "@/components/ui/adobe-pdf-viewer";
-
+import BabylonViewer from "@/components/ui/adobe-pdf-viewer";
 
 export default function ProductsPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
 
   // Navigation items
   const navItems = [
@@ -48,8 +46,8 @@ export default function ProductsPage() {
         "Basınç: 8-10 bar",
         "Debi: 50-100 L/min",
         "Sıcaklık: -10°C ile +90°C",
-        "Malzeme: Paslanmaz Çelik"
-      ]
+        "Malzeme: Paslanmaz Çelik",
+      ],
     },
     {
       icon: Zap,
@@ -59,8 +57,8 @@ export default function ProductsPage() {
         "Düşük gürültü seviyesi",
         "Uzun ömürlü tasarım",
         "Kolay bakım",
-        "Hızlı kurulum"
-      ]
+        "Hızlı kurulum",
+      ],
     },
     {
       icon: Shield,
@@ -70,8 +68,8 @@ export default function ProductsPage() {
         "Aşırı yük koruması",
         "Kuru çalışma koruması",
         "Termal koruma",
-        "CE sertifikası"
-      ]
+        "CE sertifikası",
+      ],
     },
     {
       icon: TrendingUp,
@@ -81,20 +79,20 @@ export default function ProductsPage() {
         "Çevre dostu",
         "Düşük bakım maliyeti",
         "Geniş uygulama alanı",
-        "Teknik destek"
-      ]
-    }
+        "Teknik destek",
+      ],
+    },
   ];
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#0A0A0A' }}>
+    <div className="min-h-screen" style={{ backgroundColor: "#0A0A0A" }}>
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Animated Lines */}
         <div className="absolute top-20 left-10 w-72 h-72 border border-[#464646]/30 rounded-full animate-pulse" />
         <div className="absolute top-40 right-20 w-96 h-96 border border-[#464646]/30 rounded-full animate-pulse delay-1000" />
         <div className="absolute bottom-20 left-1/4 w-64 h-64 border border-[#464646]/30 rounded-full animate-pulse delay-500" />
-        
+
         {/* Floating Dots */}
         <div className="absolute top-32 right-1/3 w-2 h-2 bg-[#464646] rounded-full animate-bounce" />
         <div className="absolute top-64 left-1/3 w-1 h-1 bg-[#464646] rounded-full animate-bounce delay-300" />
@@ -164,20 +162,20 @@ export default function ProductsPage() {
         </motion.div>
 
         <div className="grid lg:grid-cols-4 gap-8">
-                     {/* PDF Viewer - Takes 75% of the space */}
+          {/* PDF Viewer - Takes 75% of the space */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             className="lg:col-span-3"
           >
-                                                   <div className="bg-[#18181B] border border-[#464646] rounded-2xl p-6 h-[600px] relative overflow-hidden">
-               <AdobePDFViewer 
-                 pdfUrl="/ozverpompa.pdf"
-                 title="Ozver Pompa 3D Modeli"
-                 clientId="59d82101ca7c4ef3aac48c9a6a3029e9"
-               />
-             </div>
+            <div className="bg-[#18181B] border border-[#464646] rounded-2xl p-6 h-[600px] relative overflow-hidden">
+              <BabylonViewer
+                modelUrl="/models/ozverpompa.gltf"
+                width="100%"
+                height="600px"
+              />
+            </div>
           </motion.div>
 
           {/* Product Specifications - Takes 25% of the space */}
@@ -195,18 +193,24 @@ export default function ProductsPage() {
                     <Star className="w-6 h-6 text-yellow-400" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white">Ozver Pompa</h3>
+                    <h3 className="text-lg font-semibold text-white">
+                      Ozver Pompa
+                    </h3>
                     <p className="text-gray-400 text-sm">Premium Kalite</p>
                   </div>
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-gray-300 text-sm">Endüstriyel Standart</span>
+                    <span className="text-gray-300 text-sm">
+                      Endüstriyel Standart
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-gray-300 text-sm">Garantili Ürün</span>
+                    <span className="text-gray-300 text-sm">
+                      Garantili Ürün
+                    </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400" />
@@ -228,7 +232,9 @@ export default function ProductsPage() {
                     <div className="w-10 h-10 bg-gradient-to-br from-[#464646] to-[#18181B] rounded-xl flex items-center justify-center">
                       <spec.icon className="w-5 h-5 text-white" />
                     </div>
-                    <h4 className="text-lg font-semibold text-white">{spec.title}</h4>
+                    <h4 className="text-lg font-semibold text-white">
+                      {spec.title}
+                    </h4>
                   </div>
                   <ul className="space-y-2">
                     {spec.items.map((item, itemIndex) => (
@@ -260,25 +266,33 @@ export default function ProductsPage() {
                 <div className="w-16 h-16 bg-gradient-to-br from-[#464646] to-[#18181B] rounded-full flex items-center justify-center mx-auto mb-4">
                   <Zap className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-3">Yüksek Performans</h3>
+                <h3 className="text-xl font-semibold text-white mb-3">
+                  Yüksek Performans
+                </h3>
                 <p className="text-gray-400">
-                  En son teknoloji ile üretilen pompalarımız maksimum verimlilik sağlar
+                  En son teknoloji ile üretilen pompalarımız maksimum verimlilik
+                  sağlar
                 </p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-gradient-to-br from-[#464646] to-[#18181B] rounded-full flex items-center justify-center mx-auto mb-4">
                   <Shield className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-3">Güvenilir Kalite</h3>
+                <h3 className="text-xl font-semibold text-white mb-3">
+                  Güvenilir Kalite
+                </h3>
                 <p className="text-gray-400">
-                  Kalite kontrol süreçlerimiz ile her ürün mükemmellik standartlarında
+                  Kalite kontrol süreçlerimiz ile her ürün mükemmellik
+                  standartlarında
                 </p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-gradient-to-br from-[#464646] to-[#18181B] rounded-full flex items-center justify-center mx-auto mb-4">
                   <TrendingUp className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-3">Sürekli İyileştirme</h3>
+                <h3 className="text-xl font-semibold text-white mb-3">
+                  Sürekli İyileştirme
+                </h3>
                 <p className="text-gray-400">
                   Müşteri geri bildirimleri ile sürekli gelişen ürün portföyümüz
                 </p>
