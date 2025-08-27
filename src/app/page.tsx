@@ -14,9 +14,7 @@ import {
   MobileNavMenu,
   MobileNavToggle,
   NavbarLogo,
-  NavbarButton,
 } from "@/components/ui/resizable-navbar";
-import { Meteors } from "@/components/magicui/meteors";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { TextReveal } from "@/components/magicui/text-reveal";
 import { Ripple } from "@/components/magicui/ripple";
@@ -57,7 +55,7 @@ export default function Home() {
           <div className="flex items-center space-x-2">
             <ShimmerButton className="shadow-2xl">
               <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-md">
-                Ürünleri incele
+                Kalite ve Güven
               </span>
             </ShimmerButton>
           </div>
@@ -85,12 +83,6 @@ export default function Home() {
                 {item.name}
               </a>
             ))}
-            <div className="flex flex-col space-y-2 pt-4">
-              <NavbarButton variant="secondary" href="#login">
-                Giriş Yap
-              </NavbarButton>
-              <NavbarButton href="#signup">Kayıt Ol</NavbarButton>
-            </div>
           </MobileNavMenu>
         </MobileNav>
       </Navbar>
@@ -111,13 +103,13 @@ export default function Home() {
       <section className="lg:container w-full mx-auto lg:px-4 px-0 ">
         <div className="flex flex-col mt-12 lg:mt-0 lg:flex-row gap-4 w-full items-center justify-center ">
           <div className="relative py-32 lg:py-90 flex w-full flex-col items-center justify-center overflow-hidden bg-background">
-            <p className="z-10 whitespace-pre-wrap text-center lg:text-5xl text-3xl font-medium tracking-tighter text-white ">
+            <p className="z-10 whitespace-pre-wrap text-center lg:text-7xl text-3xl font-medium tracking-tighter text-white ">
               Doğru renk
             </p>
             <Ripple />
           </div>
           <div className="relative py-32 lg:py-90  w-full flex-col items-center justify-center overflow-hidden bg-background">
-            <p className="z-10 whitespace-pre-wrap text-center lg:text-5xl text-3xl font-medium tracking-tighter text-white">
+            <p className="z-10 whitespace-pre-wrap text-center lg:text-7xl text-3xl font-medium tracking-tighter text-white">
               Fark yaratır
             </p>
             <Ripple2 />
@@ -127,10 +119,10 @@ export default function Home() {
       <section className="container mx-auto px-4 py-4 flex-col lg:flex-row flex items-center justify-center">
         <div className="relative  flex flex-col  w-full lg:w-1/2  items-start justify-start overflow-hidden">
         <p className="text-2xl  text-[#6B6B6B] font-normal inter-var text-start mb-4">Özver Boyama Pompası</p>
-          <Image src="/factory2.png" alt="Özver Mekatronik" width={500} height={500} className="rounded-2xl w-full h-full object-cover" />
+          <Image src="/factory2.png" alt="Özver Mekatronik" width={400} height={400} className="rounded-2xl w-[85%] h-full object-cover" />
         </div>
-        <div className="w-full lg:w-1/2 text-[#969696] text-2xl font-light ">
-          <TextReveal>
+        <div className="w-full lg:w-1/2 text-[#969696] text-3xl font-light ">
+          <TextReveal className="lg:block hidden">
             Özver Mekatronik 1980’li yıllardan günümüze gelen tecrübesine ve
             yapmış olduğu arge çalışmalarına dayanarak Tekstil Boya ve Terbiye
             sektörü için HT Kumaş Boyama, Atmosferik Boyama, İplik Boyama
@@ -139,6 +131,16 @@ export default function Home() {
             ihtiyaç duyulan paslanmaz ünitelerin proje, imalat ve montaj
             taleplerine de yanıt vermektedir.
           </TextReveal>
+          <p className="text-[#969696] w-full text-lg block lg:hidden">
+            Özver Mekatronik 1980’li yıllardan günümüze gelen tecrübesine ve
+            yapmış olduğu arge çalışmalarına dayanarak Tekstil Boya ve Terbiye
+            sektörü için HT Kumaş Boyama, Atmosferik Boyama, İplik Boyama
+            Makineleri ve İplik Boya ekipmanları imalatının ( Kilit, Taşıyıcı,
+            Perfore) yanı sıra gıda, kimya, ilaç sanayi ve diğer sektörlerde de
+            ihtiyaç duyulan paslanmaz ünitelerin proje, imalat ve montaj
+            taleplerine de yanıt vermektedir.
+
+          </p>
         </div>
       </section>
       <section className="pb-24 mt-12 lg:mt-0 container mx-auto px-4">
@@ -202,7 +204,7 @@ export default function Home() {
               </g>
             </g>
           </svg>
-          <span className="text-white text-md">Konuşalım</span>
+          <span className="text-white text-md">Bize ulaşın</span>
         </button>
       </div>
     </div>

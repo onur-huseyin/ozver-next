@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Clock, Send, Building2 } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send, Building2, Navigation } from "lucide-react";
 import {
   Navbar,
   NavBody,
@@ -16,18 +16,47 @@ import {
 } from "@/components/ui/resizable-navbar";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { Footer } from "@/components/ui/footer";
+import { getContactInfo, submitContactForm } from "@/lib/supabaseClient";
+
+interface ContactInfo {
+  id: string;
+  address: string;
+  phone: string;
+  email: string;
+  hours: string;
+  map_url: string;
+}
 
 export default function ContactPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     subject: "",
     message: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  // Fetch contact info from Supabase
+  useEffect(() => {
+    const fetchContactInfo = async () => {
+      try {
+        const data = await getContactInfo();
+        setContactInfo(data);
+      } catch (error) {
+        console.error('Error fetching contact info:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchContactInfo();
+  }, []);
 
   // Navigation items
   const navItems = [
@@ -46,16 +75,30 @@ export default function ContactPage() {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    setShowSuccess(true);
-    // Reset form
-    setFormData({ name: "", email: "", subject: "", message: "" });
-    
-    // Hide success message after 5 seconds
-    setTimeout(() => setShowSuccess(false), 5000);
+    try {
+      // Supabase'e contact form verilerini gönder
+      const result = await submitContactForm(formData);
+      
+      if (result.success) {
+        setShowSuccess(true);
+        // Reset form
+        setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+        
+        // Hide success message after 5 seconds
+        setTimeout(() => setShowSuccess(false), 5000);
+      }
+    } catch (error) {
+      console.error('Form gönderim hatası:', error);
+      alert('Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const openDirections = () => {
+    if (contactInfo?.map_url) {
+      window.open(contactInfo.map_url, '_blank');
+    }
   };
 
   return (
@@ -81,7 +124,7 @@ export default function ContactPage() {
           <div className="flex items-center space-x-2">
             <ShimmerButton className="shadow-2xl">
               <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-md">
-                Ürünleri incele
+                Kalite ve Güven
               </span>
             </ShimmerButton>
           </div>
@@ -202,6 +245,20 @@ export default function ContactPage() {
               
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
+                  Telefon
+                </label>
+                                 <input
+                   type="tel"
+                   name="phone"
+                   value={formData.phone}
+                   onChange={handleInputChange}
+                   className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all duration-300"
+                   placeholder="05XX XXX XXXX"
+                 />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Konu
                 </label>
                                  <input
@@ -264,10 +321,20 @@ export default function ContactPage() {
                   <div className="w-12 h-12 bg-gradient-to-br from-gray-600 to-gray-700 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <MapPin className="w-6 h-6 text-white" />
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <h3 className="text-lg font-semibold text-white">Adres</h3>
-                    <p className="text-gray-300">İstanbul, Türkiye</p>
+                    <p className="text-gray-300">
+                      {loading ? "Yükleniyor..." : contactInfo?.address || "Adres bilgisi bulunamadı"}
+                    </p>
                   </div>
+                  <button
+                    onClick={openDirections}
+                    disabled={!contactInfo?.map_url}
+                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Navigation className="w-4 h-4" />
+                    Yol Tarifi
+                  </button>
                 </div>
               </div>
 
@@ -278,7 +345,9 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-white">Telefon</h3>
-                    <p className="text-gray-300">+90 (212) XXX XX XX</p>
+                    <p className="text-gray-300">
+                      {loading ? "Yükleniyor..." : contactInfo?.phone || "Telefon bilgisi bulunamadı"}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -290,7 +359,9 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-white">E-posta</h3>
-                    <p className="text-gray-300">info@ozver.com</p>
+                    <p className="text-gray-300">
+                      {loading ? "Yükleniyor..." : contactInfo?.email || "E-posta bilgisi bulunamadı"}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -302,7 +373,9 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-lg font-semibold text-white">Çalışma Saatleri</h3>
-                    <p className="text-gray-300">Pazartesi - Cuma: 09:00 - 18:00</p>
+                    <p className="text-gray-300">
+                      {loading ? "Yükleniyor..." : contactInfo?.hours || "08:00 - 17:00"}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -345,6 +418,39 @@ export default function ContactPage() {
 
       {/* Footer */}
       <Footer />
+          <div className="fixed bottom-10 right-10 z-999">
+        <button className="cursor-pointer bg-[#0F0F0F] shadow-2xl backdrop-blur-md rounded-full px-3 py-2 gap-2 flex items-center justify-center  border">
+          <svg
+            width="32px"
+            height="32px"
+            viewBox="0 0 48 48"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+          >
+            <defs></defs>
+            <g
+              id="Icons"
+              stroke="none"
+              strokeWidth="1"
+              fill="none"
+              fillRule="evenodd"
+            >
+              <g
+                id="Color-"
+                transform="translate(-700.000000, -360.000000)"
+                fill="#67C15E"
+              >
+                <path
+                  d="M723.993033,360 C710.762252,360 700,370.765287 700,383.999801 C700,389.248451 701.692661,394.116025 704.570026,398.066947 L701.579605,406.983798 L710.804449,404.035539 C714.598605,406.546975 719.126434,408 724.006967,408 C737.237748,408 748,397.234315 748,384.000199 C748,370.765685 737.237748,360.000398 724.006967,360.000398 L723.993033,360.000398 L723.993033,360 Z M717.29285,372.190836 C716.827488,371.07628 716.474784,371.034071 715.769774,371.005401 C715.529728,370.991464 715.262214,370.977527 714.96564,370.977527 C714.04845,370.977527 713.089462,371.245514 712.511043,371.838033 C711.806033,372.557577 710.056843,374.23638 710.056843,377.679202 C710.056843,381.122023 712.567571,384.451756 712.905944,384.917648 C713.258648,385.382743 717.800808,392.55031 724.853297,395.471492 C730.368379,397.757149 732.00491,397.545307 733.260074,397.27732 C735.093658,396.882308 737.393002,395.527239 737.971421,393.891043 C738.54984,392.25405 738.54984,390.857171 738.380255,390.560912 C738.211068,390.264652 737.745308,390.095816 737.040298,389.742615 C736.335288,389.389811 732.90737,387.696673 732.25849,387.470894 C731.623543,387.231179 731.017259,387.315995 730.537963,387.99333 C729.860819,388.938653 729.198006,389.89831 728.661785,390.476494 C728.238619,390.928051 727.547144,390.984595 726.969123,390.744481 C726.193254,390.420348 724.021298,389.657798 721.340985,387.273388 C719.267356,385.42535 717.856938,383.125756 717.448104,382.434484 C717.038871,381.729275 717.405907,381.319529 717.729948,380.938852 C718.082653,380.501232 718.421026,380.191036 718.77373,379.781688 C719.126434,379.372738 719.323884,379.160897 719.549599,378.681068 C719.789645,378.215575 719.62006,377.735746 719.450874,377.382942 C719.281687,377.030139 717.871269,373.587317 717.29285,372.190836 Z"
+                  id="Whatsapp"
+                ></path>
+              </g>
+            </g>
+          </svg>
+          <span className="text-white text-md">Bize ulaşın</span>
+        </button>
+      </div>
     </div>
   );
 }

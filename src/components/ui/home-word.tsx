@@ -3,7 +3,7 @@ import WorldMap from "@/components/ui/world-map";
 
 export function HomeWord() {
   return (
-    <div className=" py-4 lg:py-40 pb-0 w-full">
+    <div className=" py-4 lg:pt-40 pb-0 w-full">
       <div className="w-full mx-auto text-center">
         <p className="font-bold text-xl md:text-4xl dark:text-white text-black">
          24 ülke için ÖZVER MEKATRONİK

@@ -1,14 +1,15 @@
 import Image from "next/image";
+
 export function Footer() {
   return (
-    <footer className="relative min-h-[400px] bg-gradient-to-br from-black via-slate-900 to-blue-900 py-16">
+    <footer className="relative min-h-[400px] bg-black py-16 pt-36">
       {/* Gradient Background Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-slate-900/90 to-blue-900/80"></div>
-      
+     
       {/* Main Footer Content */}
-      <div className="relative z-10 container mx-auto px-4">
-        <div className=" backdrop-blur-lg rounded-2xl border border-slate-700/50 p-8 shadow-2xl">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+      <div className="container relative z-10 mx-auto px-4">
+      <div className="absolute inset-0 z-0 opacity-75" style={{ background: 'radial-gradient(ellipse at center top, #303336 0%, rgba(48, 51, 54, 0.3) 40%, rgba(48, 51, 54, 0) 70%)' }}></div>
+        <div style={{borderBottom: 'none'}} className="bg-black z-10 rounded-t-2xl border-t border-[#171717] p-8">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8 z-10">
             
             {/* Brand/Logo Section */}
             <div className="flex flex-col items-start space-y-4">
@@ -17,13 +18,10 @@ export function Footer() {
                   <Image src="/ozver-mek.png" alt="Özver" width={200} height={200} />
                 </span>
               </div>
-              <p className="text-slate-300 text-sm leading-relaxed">
-                1980&apos;den beri mekatronik çözümlerde öncü, kaliteli hizmet ve yenilikçi teknolojilerle sektörde güvenilir partneriniz.
-              </p>
             </div>
 
-            {/* Ürünler Column */}
-            <div className="flex flex-col space-y-4">
+            {/* Product Column */}
+            <div className="flex flex-col space-y-4 z-10">
               <h3 className="text-white font-semibold text-lg mb-2">Ürünler</h3>
               <div className="space-y-2">
                 <a href="/products" className="text-slate-300 hover:text-white transition-colors text-sm block">
@@ -44,7 +42,7 @@ export function Footer() {
               </div>
             </div>
 
-            {/* Hizmetler Column */}
+            {/* Resources Column */}
             <div className="flex flex-col space-y-4">
               <h3 className="text-white font-semibold text-lg mb-2">Hizmetler</h3>
               <div className="space-y-2">
@@ -60,37 +58,30 @@ export function Footer() {
                 <a href="/about" className="text-slate-300 hover:text-white transition-colors text-sm block">
                   Danışmanlık
                 </a>
-                <a href="/about" className="text-slate-300 hover:text-white transition-colors text-sm block">
-                  Proje Yönetimi
-                </a>
+
               </div>
             </div>
 
-            {/* İletişim Column */}
+
+            {/* Connect Column */}
             <div className="flex flex-col space-y-4">
-              <h3 className="text-white font-semibold text-lg mb-2">İletişim</h3>
+              <h3 className="text-white font-semibold text-lg mb-2">Connect</h3>
               <div className="space-y-2">
-                <a href="/contact" className="text-slate-300 hover:text-white transition-colors text-sm block">
-                  İletişim
+                <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm block flex items-center">
+                  Contact
+                  <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M7 17l9.2-9.2M17 17V7H7"/>
+                  </svg>
                 </a>
-                <a href="/about" className="text-slate-300 hover:text-white transition-colors text-sm block">
-                  Hakkımızda
-                </a>
-                <a href="/contact" className="text-slate-300 hover:text-white transition-colors text-sm block">
-                  Teklif Al
-                </a>
-                <a href="/contact" className="text-slate-300 hover:text-white transition-colors text-sm block">
-                  Destek
-                </a>
-                <a href="/contact" className="text-slate-300 hover:text-white transition-colors text-sm block">
-                  Fuar Takvimi
+                <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm block">
+                  Forum
                 </a>
               </div>
             </div>
           </div>
 
           {/* Copyright Section */}
-          <div className="border-t border-slate-700/50 pt-6">
+          <div className=" pt-6">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
               <div className="text-slate-400 text-sm text-center md:text-left">
                 <p>Tüm ürün isimleri, logolar ve markalar ilgili sahiplerinin mülkiyetindedir.</p>
@@ -99,7 +90,7 @@ export function Footer() {
               <div className="flex items-center space-x-2">
                 <span className="text-slate-400 text-sm">by</span>
                 <div className="bg-white text-black px-3 py-1 rounded text-xs font-semibold">
-                  NO LIMITS & WEB
+                  <a href="https://onur-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer">ONURSOFT</a>
                 </div>
               </div>
             </div>

@@ -57,4 +57,55 @@ export async function getSliderImages(): Promise<SliderImage[]> {
 	}
 }
 
+// İletişim bilgilerini Supabase'den çeken fonksiyon
+export async function getContactInfo() {
+	const supabase = getSupabaseClient();
+	
+	try {
+		const { data, error } = await supabase
+			.from('contact')
+			.select('*')
+			.single();
+
+		if (error) {
+			console.error('İletişim bilgileri çekilirken hata:', error);
+			return null;
+		}
+
+		return data;
+	} catch (error) {
+		console.error('İletişim bilgileri çekilirken beklenmeyen hata:', error);
+		return null;
+	}
+}
+
+// Contact form verilerini Supabase'e gönderen fonksiyon
+export async function submitContactForm(formData: {
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+}) {
+	const supabase = getSupabaseClient();
+	
+	try {
+		const { data, error } = await supabase
+			.from('contact_submissions')
+			.insert([formData])
+			.select()
+			.single();
+
+		if (error) {
+			console.error('Contact form gönderilirken hata:', error);
+			throw error;
+		}
+
+		return { success: true, data };
+	} catch (error) {
+		console.error('Contact form gönderilirken beklenmeyen hata:', error);
+		throw error;
+	}
+}
+
 
