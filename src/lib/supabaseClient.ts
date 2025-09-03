@@ -108,4 +108,116 @@ export async function submitContactForm(formData: {
 	}
 }
 
+// Kategorileri Supabase'den çeken fonksiyon
+export async function getCategories() {
+	const supabase = getSupabaseClient();
+	
+	try {
+		const { data, error } = await supabase
+			.from('categories')
+			.select('*')
+			.order('created_at', { ascending: true });
+
+		if (error) {
+			console.error('Kategoriler çekilirken hata:', error);
+			return [];
+		}
+
+		return data || [];
+	} catch (error) {
+		console.error('Kategoriler çekilirken beklenmeyen hata:', error);
+		return [];
+	}
+}
+
+// Belirli bir kategoriye ait ürünleri çeken fonksiyon
+export async function getProductsByCategory(categoryId: string) {
+	const supabase = getSupabaseClient();
+	
+	try {
+		const { data, error } = await supabase
+			.from('products')
+			.select('*')
+			.eq('category_id', categoryId)
+			.order('created_at', { ascending: true });
+
+		if (error) {
+			console.error('Ürünler çekilirken hata:', error);
+			return [];
+		}
+
+		return data || [];
+	} catch (error) {
+		console.error('Ürünler çekilirken beklenmeyen hata:', error);
+		return [];
+	}
+}
+
+// Kategori bilgisini ID ile çeken fonksiyon
+export async function getCategoryById(categoryId: string) {
+	const supabase = getSupabaseClient();
+	
+	try {
+		const { data, error } = await supabase
+			.from('categories')
+			.select('*')
+			.eq('id', categoryId)
+			.single();
+
+		if (error) {
+			console.error('Kategori çekilirken hata:', error);
+			return null;
+		}
+
+		return data;
+	} catch (error) {
+		console.error('Kategori çekilirken beklenmeyen hata:', error);
+		return null;
+	}
+}
+
+// Reference logolarını Supabase tablosundan çeken fonksiyon
+export async function getReferenceLogos() {
+	const supabase = getSupabaseClient();
+	
+	try {
+		const { data, error } = await supabase
+			.from('reference_logos')
+			.select('*')
+			.order('created_at', { ascending: true });
+
+		if (error) {
+			console.error('Reference logoları çekilirken hata:', error);
+			return [];
+		}
+
+		return data || [];
+	} catch (error) {
+		console.error('Reference logoları çekilirken beklenmeyen hata:', error);
+		return [];
+	}
+}
+
+// Blog yazılarını Supabase'den çeken fonksiyon
+export async function getBlogs() {
+	const supabase = getSupabaseClient();
+	
+	try {
+		const { data, error } = await supabase
+			.from('blogs')
+			.select('*')
+			.order('published_at', { ascending: false });
+
+		if (error) {
+			console.error('Blog yazıları çekilirken hata:', error);
+			return [];
+		}
+
+		return data || [];
+	} catch (error) {
+		console.error('Blog yazıları çekilirken beklenmeyen hata:', error);
+		return [];
+	}
+}
+
 

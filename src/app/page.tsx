@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, Suspense, lazy } from "react";
 import { WavyBackgroundDemo } from "@/components/ui/home-slider";
 import { Comments } from "@/components/ui/comments";
 import Image from "next/image";
@@ -9,31 +8,16 @@ import {
   Navbar,
   NavBody,
   NavItems,
-  MobileNav,
-  MobileNavHeader,
-  MobileNavMenu,
-  MobileNavToggle,
   NavbarLogo,
 } from "@/components/ui/resizable-navbar";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
+import MobileMenu from "@/components/ui/mobile-menu";
 import { TextReveal } from "@/components/magicui/text-reveal";
 import { Ripple } from "@/components/magicui/ripple";
 import { Ripple2 } from "@/components/magicui/ripple2";
-
-// Lazy load heavy components
-const LazyFooter = lazy(() =>
-  import("@/components/ui/footer").then((module) => ({
-    default: module.Footer,
-  }))
-);
-const LazyHomeWord = lazy(() =>
-  import("@/components/ui/home-word").then((module) => ({
-    default: module.HomeWord,
-  }))
-);
-const LazyBlogs = lazy(() =>
-  import("@/components/ui/blogs").then((module) => ({ default: module.Blogs }))
-);
+import { Footer } from "@/components/ui/footer";
+import { HomeWord } from "@/components/ui/home-word";
+import { Blogs } from "@/components/ui/blogs";
 
 // Navbar verileri
 const navItems = [
@@ -43,11 +27,9 @@ const navItems = [
   { name: "İletişim", link: "/contact" },
 ];
 export default function Home() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   return (
     <div className="min-h-screen">
-      {/* Resizable Navbar */}
+      {/* Desktop Navbar */}
       <Navbar>
         <NavBody>
           <NavbarLogo />
@@ -60,44 +42,14 @@ export default function Home() {
             </ShimmerButton>
           </div>
         </NavBody>
-
-        <MobileNav>
-          <MobileNavHeader>
-            <NavbarLogo />
-            <MobileNavToggle
-              isOpen={mobileMenuOpen}
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            />
-          </MobileNavHeader>
-          <MobileNavMenu
-            isOpen={mobileMenuOpen}
-            onClose={() => setMobileMenuOpen(false)}
-          >
-            {navItems.map((item, index) => (
-              <a
-                key={index}
-                href={item.link}
-                className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-800 dark:hover:text-neutral-100"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.name}
-              </a>
-            ))}
-          </MobileNavMenu>
-        </MobileNav>
       </Navbar>
 
+      {/* Mobile Menu */}
+      <MobileMenu />
+
       {/* Hero Section */}
-      <section className="container mx-auto px-4">
-        <Suspense
-          fallback={
-            <div className="h-64 flex items-center justify-center">
-              Yükleniyor...
-            </div>
-          }
-        >
-          <WavyBackgroundDemo />
-        </Suspense>
+      <section className="container mx-auto px-4 pt-20 md:pt-0">
+        <WavyBackgroundDemo />
       </section>
       {/* Apple Card Carousel Section */}
       <section className="lg:container w-full mx-auto lg:px-4 px-0 ">
@@ -117,11 +69,10 @@ export default function Home() {
         </div>
       </section>
       <section className="container mx-auto px-4 py-4 flex-col lg:flex-row flex items-center justify-center">
-        <div className="relative  flex flex-col  w-full lg:w-1/2  items-start justify-start overflow-hidden">
-        <p className="text-2xl  text-[#6B6B6B] font-normal inter-var text-start mb-4">Özver Boyama Pompası</p>
+        <div className="relative  flex flex-col  w-full lg:w-1/2  items-center lg:items-start justify-start overflow-hidden">
           <Image src="/factory2.png" alt="Özver Mekatronik" width={400} height={400} className="rounded-2xl w-[85%] h-full object-cover" />
         </div>
-        <div className="w-full lg:w-1/2 text-[#969696] text-3xl font-light ">
+        <div className="w-full lg:w-1/2 text-[#969696] text-3xl font-light pt-4 lg:pt-0">
           <TextReveal className="lg:block hidden">
             Özver Mekatronik 1980’li yıllardan günümüze gelen tecrübesine ve
             yapmış olduğu arge çalışmalarına dayanarak Tekstil Boya ve Terbiye
@@ -131,7 +82,7 @@ export default function Home() {
             ihtiyaç duyulan paslanmaz ünitelerin proje, imalat ve montaj
             taleplerine de yanıt vermektedir.
           </TextReveal>
-          <p className="text-[#969696] w-full text-lg block lg:hidden">
+          <p className="text-[#969696] w-full text-xl block lg:hidden">
             Özver Mekatronik 1980’li yıllardan günümüze gelen tecrübesine ve
             yapmış olduğu arge çalışmalarına dayanarak Tekstil Boya ve Terbiye
             sektörü için HT Kumaş Boyama, Atmosferik Boyama, İplik Boyama
@@ -145,34 +96,10 @@ export default function Home() {
       </section>
       <section className="pb-24 mt-12 lg:mt-0 container mx-auto px-4">
         <Comments />
-        <Suspense
-          fallback={
-            <div className="h-32 flex items-center justify-center">
-              Yükleniyor...
-            </div>
-          }
-        >
-          <LazyBlogs />
-        </Suspense>
+        <Blogs />
       </section>
-      <Suspense
-        fallback={
-          <div className="h-32 flex items-center justify-center">
-            Yükleniyor...
-          </div>
-        }
-      >
-        <LazyHomeWord />
-      </Suspense>
-      <Suspense
-        fallback={
-          <div className="h-32 flex items-center justify-center">
-            Yükleniyor...
-          </div>
-        }
-      >
-        <LazyFooter />
-      </Suspense>
+      <HomeWord />
+      <Footer />
 
       <div className="fixed bottom-10 right-10 z-999">
         <button className="cursor-pointer bg-[#0F0F0F] shadow-2xl backdrop-blur-md rounded-full px-3 py-2 gap-2 flex items-center justify-center  border">

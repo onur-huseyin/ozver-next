@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export function Footer() {
   return (
-    <footer className="relative min-h-[400px] bg-black py-16 pt-36">
+    <footer className="relative min-h-[400px] bg-black lg:py-16 lg:pt-36">
       {/* Gradient Background Overlay */}
      
       {/* Main Footer Content */}
@@ -67,7 +67,7 @@ export function Footer() {
             <div className="flex flex-col space-y-4">
               <h3 className="text-white font-semibold text-lg mb-2">Connect</h3>
               <div className="space-y-2">
-                <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm block flex items-center">
+                <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm block  items-center">
                   Contact
                   <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M7 17l9.2-9.2M17 17V7H7"/>

@@ -8,6 +8,7 @@ import {
   useMotionValueEvent,
 } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 import React, { useRef, useState } from "react";
 
@@ -236,8 +237,8 @@ export const MobileNavToggle = ({
 
 export const NavbarLogo = () => {
   return (
-    <a
-      href="#"
+    <Link
+      href="/"
       className="z-20 flex items-center h-8"
     >
       <Image
@@ -247,7 +248,7 @@ export const NavbarLogo = () => {
         height={180}
         className=" object-contain"
       />
-    </a>
+    </Link>
   );
 };
 

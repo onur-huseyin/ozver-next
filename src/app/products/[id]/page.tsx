@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
+import { ArrowLeft, Eye, Settings, CheckCircle } from "lucide-react";
 import {
   Navbar,
   NavBody,
@@ -13,7 +13,8 @@ import {
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import MobileMenu from "@/components/ui/mobile-menu";
 import { Footer } from "@/components/ui/footer";
-import { getCategories } from "@/lib/supabaseClient";
+import { getCategoryById, getProductsByCategory } from "@/lib/supabaseClient";
+import ModelViewerModal from "@/components/ui/model-viewer-modal";
 
 interface Category {
   id: string;
@@ -26,25 +27,47 @@ interface Category {
   model_filename: string;
 }
 
-export default function ProductsPage() {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
+interface Product {
+  id: string;
+  name: string;
+  category_id: string;
+  technical_specs: Record<string, string>;
+  created_at: string;
+  updated_at: string;
+}
 
-  // Fetch categories from Supabase
+export default function CategoryDetailPage() {
+  const params = useParams();
+  const router = useRouter();
+  const [category, setCategory] = useState<Category | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [showModelModal, setShowModelModal] = useState(false);
+
+  const categoryId = params.id as string;
+
+  // Fetch category and products data
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchData = async () => {
       try {
-        const data = await getCategories();
-        setCategories(data);
+        const [categoryData, productsData] = await Promise.all([
+          getCategoryById(categoryId),
+          getProductsByCategory(categoryId)
+        ]);
+        
+        setCategory(categoryData);
+        setProducts(productsData);
       } catch (error) {
-        console.error('Error fetching categories:', error);
+        console.error('Error fetching data:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCategories();
-  }, []);
+    if (categoryId) {
+      fetchData();
+    }
+  }, [categoryId]);
 
   // Navigation items
   const navItems = [
@@ -53,6 +76,45 @@ export default function ProductsPage() {
     { name: "Ürünler", link: "/products" },
     { name: "İletişim", link: "/contact" },
   ];
+
+  const handleBackClick = () => {
+    router.push('/products');
+  };
+
+  const handleViewModel = () => {
+    setShowModelModal(true);
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-slate-950">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="w-16 h-16 border-4 border-gray-600 border-t-white rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-400">Yükleniyor...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!category) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-slate-950">
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-white mb-4">Kategori bulunamadı</h1>
+            <button
+              onClick={handleBackClick}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors"
+            >
+              Geri Dön
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-slate-950">
@@ -69,7 +131,7 @@ export default function ProductsPage() {
         <div className="absolute bottom-32 right-1/4 w-1.5 h-1.5 bg-gray-700 rounded-full animate-bounce delay-700" />
       </div>
 
-      {/* Desktop Navbar */}
+      {/* Resizable Navbar */}
       <Navbar>
         <NavBody>
           <NavbarLogo />
@@ -82,97 +144,126 @@ export default function ProductsPage() {
             </ShimmerButton>
           </div>
         </NavBody>
+
+
       </Navbar>
 
       {/* Mobile Menu */}
       <MobileMenu />
 
       <div className="relative z-10 container mx-auto px-4 py-16 pt-32 md:pt-16">
-        {/* Header Section */}
+        {/* Back Button */}
+        <motion.button
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          onClick={handleBackClick}
+          className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-8"
+        >
+          <ArrowLeft className="w-5 h-5" />
+          Kategorilere Geri Dön
+        </motion.button>
+
+        {/* Category Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-white via-gray-300 to-gray-400 bg-clip-text text-transparent mt-6">
-            Ürün Kategorileri
+          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-white via-gray-300 to-gray-400 bg-clip-text text-transparent mb-6">
+            {category.name}
           </h1>
-          <p className=" text-xs mt-6 pt-4 lg:mt-0 lg:text-md text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Endüstriyel çözümlerimizi keşfedin. Her kategori için özel olarak <br /> tasarlanmış ürünlerimizi inceleyin.
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            Bu kategoriye ait ürünlerimizi inceleyin ve teknik özelliklerini keşfedin.
           </p>
         </motion.div>
 
-        {/* Categories Grid */}
-        {loading ? (
+        {/* 3D Model Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="text-center mb-12"
+        >
+          <button
+            onClick={handleViewModel}
+            className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 rounded-xl transition-all duration-300 flex items-center gap-3 mx-auto transform hover:scale-105"
+          >
+            <Eye className="w-5 h-5" />
+            3D Modeli Görüntüle
+          </button>
+        </motion.div>
+
+        {/* Products Grid */}
+        {products.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(6)].map((_, index) => (
-              <div key={index} className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 animate-pulse">
-                <div className="w-full h-48 bg-gray-700 rounded-xl mb-6"></div>
-                <div className="h-6 bg-gray-700 rounded mb-4"></div>
-                <div className="h-4 bg-gray-700 rounded w-3/4"></div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 container mx-auto md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {categories.map((category, index) => (
+            {products.map((product, index) => (
               <motion.div
-                key={category.id}
+                key={product.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group"
+                transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+                className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 hover:border-gray-500/50 transition-all duration-300"
               >
-                <Link href={`/products/${category.id}`}>
-                  <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10 hover:border-gray-500/50 transition-all duration-300 cursor-pointer h-full">
-                    {/* Category Image */}
-                    <div className="relative w-full h-48 mb-6 rounded-xl overflow-hidden">
-                      <Image
-                        src={category.image_url}
-                        alt={category.name}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
+                {/* Product Name */}
+                <h3 className="text-xl font-semibold text-white mb-6">
+                  {product.name}
+                </h3>
+
+                {/* Technical Specifications */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-gradient-to-br from-gray-600 to-gray-700 rounded-xl flex items-center justify-center">
+                      <Settings className="w-5 h-5 text-white" />
                     </div>
-                    
-                    {/* Category Name */}
-                    <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-gray-300 transition-colors">
-                      {category.name}
-                    </h3>
-                    
-                    {/* Category Description */}
-                    <p className="text-gray-400 text-sm">
-                      Bu kategoriye ait ürünleri görüntülemek için tıklayın
-                    </p>
+                    <h4 className="text-lg font-semibold text-gray-300">
+                      Teknik Özellikler
+                    </h4>
                   </div>
-                </Link>
+                  
+                  <div className="space-y-3">
+                    {Object.entries(product.technical_specs).map(([key, value], specIndex) => (
+                      <div key={specIndex} className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
+                        <span className="text-gray-300 text-sm">
+                          <span className="font-medium">{key}:</span> {value}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
-        )}
-
-        {/* Empty State */}
-        {!loading && categories.length === 0 && (
+        ) : (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             className="text-center py-16"
           >
             <div className="w-24 h-24 bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-              </svg>
+              <Settings className="w-12 h-12 text-gray-400" />
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">Henüz kategori bulunmuyor</h3>
-            <p className="text-gray-400">Yakında yeni kategoriler eklenecek.</p>
+            <h3 className="text-xl font-semibold text-white mb-2">Henüz ürün bulunmuyor</h3>
+            <p className="text-gray-400">Bu kategoriye ait ürünler yakında eklenecek.</p>
           </motion.div>
         )}
       </div>
 
       {/* Footer */}
       <Footer />
+
+      {/* 3D Model Modal */}
+      {showModelModal && category.model_url && (
+        <ModelViewerModal
+          modelUrl={category.model_url}
+          modelName={category.name}
+          onClose={() => setShowModelModal(false)}
+        />
+      )}
+
       <div className="fixed bottom-10 right-10 z-999">
         <button className="cursor-pointer bg-[#0F0F0F] shadow-2xl backdrop-blur-md rounded-full px-3 py-2 gap-2 flex items-center justify-center border">
           <svg

@@ -7,16 +7,13 @@ import {
   Navbar,
   NavBody,
   NavItems,
-  MobileNav,
-  MobileNavHeader,
-  MobileNavMenu,
-  MobileNavToggle,
   NavbarLogo,
-  NavbarButton,
 } from "@/components/ui/resizable-navbar";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
+import MobileMenu from "@/components/ui/mobile-menu";
 import { Footer } from "@/components/ui/footer";
 import { getContactInfo, submitContactForm } from "@/lib/supabaseClient";
+import { Comments } from "@/components/ui/comments";
 
 interface ContactInfo {
   id: string;
@@ -28,7 +25,6 @@ interface ContactInfo {
 }
 
 export default function ContactPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
@@ -130,39 +126,13 @@ export default function ContactPage() {
           </div>
         </NavBody>
 
-        <MobileNav>
-          <MobileNavHeader>
-            <NavbarLogo />
-            <MobileNavToggle
-              isOpen={mobileMenuOpen}
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            />
-          </MobileNavHeader>
-          <MobileNavMenu
-            isOpen={mobileMenuOpen}
-            onClose={() => setMobileMenuOpen(false)}
-          >
-            {navItems.map((item, index) => (
-              <a
-                key={index}
-                href={item.link}
-                className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-800 dark:hover:text-neutral-100"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.name}
-              </a>
-            ))}
-            <div className="flex flex-col space-y-2 pt-4">
-              <NavbarButton variant="secondary" href="#login">
-                Giriş Yap
-              </NavbarButton>
-              <NavbarButton href="#signup">Kayıt Ol</NavbarButton>
-            </div>
-          </MobileNavMenu>
-        </MobileNav>
+
       </Navbar>
 
-      <div className="relative z-10 container mx-auto px-4 py-16">
+      {/* Mobile Menu */}
+      <MobileMenu />
+
+      <div className="relative z-10 container mx-auto px-4 py-16 pt-32 md:pt-16">
         {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -413,7 +383,7 @@ export default function ContactPage() {
             </div>
           </motion.div>
         </div>
-
+                  <Comments />
       </div>
 
       {/* Footer */}
