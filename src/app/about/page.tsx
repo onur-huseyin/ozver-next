@@ -28,6 +28,7 @@ import {
   IconShield
 } from "@tabler/icons-react";
 import { AboutTime } from "@/components/ui/about-time";
+import { Comments } from "@/components/ui/comments";
 
 const navItems = [
   { name: "Ana Sayfa", link: "/" },
@@ -156,6 +157,7 @@ export default function AboutPage() {
           transition={{ duration: 0.6, delay: 0.6 }}
           className="mb-16"
         >
+          <Comments />
           <h2 className="text-3xl font-bold text-center mb-12">Değerlerimiz</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => (

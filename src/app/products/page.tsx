@@ -14,6 +14,7 @@ import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import MobileMenu from "@/components/ui/mobile-menu";
 import { Footer } from "@/components/ui/footer";
 import { getCategories } from "@/lib/supabaseClient";
+import { Comments } from "@/components/ui/comments";
 
 interface Category {
   id: string;
@@ -101,6 +102,7 @@ export default function ProductsPage() {
           <p className=" text-xs mt-6 pt-4 lg:mt-0 lg:text-md text-gray-300 max-w-2xl mx-auto leading-relaxed">
             Endüstriyel çözümlerimizi keşfedin. Her kategori için özel olarak <br /> tasarlanmış ürünlerimizi inceleyin.
           </p>
+
         </motion.div>
 
         {/* Categories Grid */}
@@ -170,7 +172,7 @@ export default function ProductsPage() {
           </motion.div>
         )}
       </div>
-
+      <Comments />
       {/* Footer */}
       <Footer />
       <div className="fixed bottom-10 right-10 z-999">
