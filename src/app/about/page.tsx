@@ -1,17 +1,10 @@
 "use client";
-import { useState } from "react";
-
 import { motion } from "framer-motion";
 import {
       Navbar,
       NavBody,
       NavItems,
-      MobileNav,
-      MobileNavHeader,
-      MobileNavMenu,
-      MobileNavToggle,
       NavbarLogo,
-      NavbarButton,
     } from "@/components/ui/resizable-navbar";
 import { Footer } from "@/components/ui/footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,6 +22,7 @@ import {
 } from "@tabler/icons-react";
 import { AboutTime } from "@/components/ui/about-time";
 import { Comments } from "@/components/ui/comments";
+import MobileMenu from "@/components/ui/mobile-menu";
 
 const navItems = [
   { name: "Ana Sayfa", link: "/" },
@@ -38,7 +32,6 @@ const navItems = [
 ];
 
 export default function AboutPage() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const stats = [
     { label: "Yıllık Deneyim", value: "40+", icon: IconAward },
@@ -73,6 +66,20 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Resizable Navbar */}
+        {/* Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+        {/* Animated Lines */}
+        <div className="absolute top-20 left-10 w-72 h-72 border border-gray-600/30 rounded-full animate-pulse" />
+        <div className="absolute top-40 right-20 w-96 h-96 border border-gray-700/30 rounded-full animate-pulse delay-1000" />
+        <div className="absolute bottom-20 left-1/4 w-64 h-64 border border-gray-800/30 rounded-full animate-pulse delay-500" />
+
+        {/* Floating Dots */}
+        <div className="absolute top-32 right-1/3 w-2 h-2 bg-gray-500 rounded-full animate-bounce" />
+        <div className="absolute top-64 left-1/3 w-1 h-1 bg-gray-600 rounded-full animate-bounce delay-300" />
+        <div className="absolute bottom-32 right-1/4 w-1.5 h-1.5 bg-gray-700 rounded-full animate-bounce delay-700" />
+      </div>
+
+      {/* Desktop Navbar */}
       <Navbar>
         <NavBody>
           <NavbarLogo />
@@ -85,38 +92,10 @@ export default function AboutPage() {
             </ShimmerButton>
           </div>
         </NavBody>
-
-        <MobileNav>
-          <MobileNavHeader>
-            <NavbarLogo />
-            <MobileNavToggle
-              isOpen={mobileMenuOpen}
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            />
-          </MobileNavHeader>
-          <MobileNavMenu
-            isOpen={mobileMenuOpen}
-            onClose={() => setMobileMenuOpen(false)}
-          >
-            {navItems.map((item, index) => (
-              <a
-                key={index}
-                href={item.link}
-                className="text-neutral-600 dark:text-neutral-300 hover:text-neutral-800 dark:hover:text-neutral-100"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.name}
-              </a>
-            ))}
-            <div className="flex flex-col space-y-2 pt-4">
-              <NavbarButton variant="secondary" href="#login">
-                Giriş Yap
-              </NavbarButton>
-              <NavbarButton href="#signup">Kayıt Ol</NavbarButton>
-            </div>
-          </MobileNavMenu>
-        </MobileNav>
       </Navbar>
+
+      {/* Mobile Menu */}
+      <MobileMenu />  
       
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20">
