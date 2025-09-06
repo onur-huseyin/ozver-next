@@ -13,6 +13,8 @@ import {
   NavbarLogo,
 } from "@/components/ui/resizable-navbar";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
+import { LanguageSelector } from "@/components/ui/language-selector";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Blog {
   id: string;
@@ -24,13 +26,7 @@ interface Blog {
   created_at: string;
 }
 
-// Navbar verileri
-const navItems = [
-  { name: "Ana Sayfa", link: "/" },
-  { name: "Hakkımızda", link: "/about" },
-  { name: "Ürünler", link: "/products" },
-  { name: "İletişim", link: "/contact" },
-];
+// Navbar verileri - bu artık component içinde tanımlanacak
 
 export default function BlogDetailPage() {
   const params = useParams();
@@ -38,6 +34,15 @@ export default function BlogDetailPage() {
   const [blog, setBlog] = useState<Blog | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { t } = useLanguage();
+
+  // Navbar verileri
+  const navItems = [
+    { name: t('nav.home'), link: "/" },
+    { name: t('nav.about'), link: "/about" },
+    { name: t('nav.products'), link: "/products" },
+    { name: t('nav.contact'), link: "/contact" },
+  ];
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -89,9 +94,16 @@ export default function BlogDetailPage() {
             <NavbarLogo />
             <NavItems items={navItems} />
             <div className="flex items-center space-x-2">
-              <ShimmerButton className="shadow-2xl">
+              <LanguageSelector />
+              <ShimmerButton 
+                className="shadow-2xl transition-all duration-300 ease-in-out"
+                style={{ 
+                  opacity: 'calc(1 - var(--navbar-visible, 0))',
+                  transform: 'scale(calc(1 - var(--navbar-visible, 0)))',
+                }}
+              >
                 <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-md">
-                  Kalite ve Güven
+                  {t('nav.quality')}
                 </span>
               </ShimmerButton>
             </div>
@@ -130,9 +142,16 @@ export default function BlogDetailPage() {
             <NavbarLogo />
             <NavItems items={navItems} />
             <div className="flex items-center space-x-2">
-              <ShimmerButton className="shadow-2xl">
+              <LanguageSelector />
+              <ShimmerButton 
+                className="shadow-2xl transition-all duration-300 ease-in-out"
+                style={{ 
+                  opacity: 'calc(1 - var(--navbar-visible, 0))',
+                  transform: 'scale(calc(1 - var(--navbar-visible, 0)))',
+                }}
+              >
                 <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-md">
-                  Kalite ve Güven
+                  {t('nav.quality')}
                 </span>
               </ShimmerButton>
             </div>
@@ -146,14 +165,14 @@ export default function BlogDetailPage() {
           <div className="container mx-auto px-4 py-8">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">
-                {error || "Blog bulunamadı"}
+                {error || t('blog.empty')}
               </h1>
               <button
                 onClick={() => router.push("/")}
                 className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Ana Sayfaya Dön
+                {t('blog.backToHome')}
               </button>
             </div>
           </div>
@@ -185,14 +204,14 @@ export default function BlogDetailPage() {
       <div className="pt-32 md:pt-16">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
-          <button
+            <button
               onClick={() => router.back()}
               className="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 mb-6 transition-colors"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Geri Dön
+              {t('blog.back')}
             </button>
-            <h2 className="text-2xl lg:text-6xl font-bold pb-4 text-[#858585]  mb-4">Blog Detayı</h2>
+            <h2 className="text-2xl lg:text-6xl font-bold pb-4 text-[#858585]  mb-4">{t('blog.detail.title')}</h2>
             {/* Back button */}
 
 

@@ -18,15 +18,19 @@ import { Ripple2 } from "@/components/magicui/ripple2";
 import { Footer } from "@/components/ui/footer";
 import { HomeWord } from "@/components/ui/home-word";
 import { Blogs } from "@/components/ui/blogs";
-
-// Navbar verileri
-const navItems = [
-  { name: "Ana Sayfa", link: "/" },
-  { name: "Hakkımızda", link: "/about" },
-  { name: "Ürünler", link: "/products" },
-  { name: "İletişim", link: "/contact" },
-];
+import { LanguageSelector } from "@/components/ui/language-selector";
+import { useLanguage } from "@/contexts/LanguageContext";
 export default function Home() {
+  const { t } = useLanguage();
+
+  // Navbar verileri
+  const navItems = [
+    { name: t('nav.home'), link: "/" },
+    { name: t('nav.about'), link: "/about" },
+    { name: t('nav.products'), link: "/products" },
+    { name: t('nav.contact'), link: "/contact" },
+  ];
+
   return (
     <div className="min-h-screen">
       {/* Desktop Navbar */}
@@ -35,9 +39,10 @@ export default function Home() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center space-x-2">
+            <LanguageSelector />
             <ShimmerButton className="shadow-2xl">
               <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-md">
-                Kalite ve Güven
+                {t('nav.quality')}
               </span>
             </ShimmerButton>
           </div>
@@ -56,13 +61,13 @@ export default function Home() {
         <div className="flex flex-col mt-12 lg:mt-0 lg:flex-row gap-4 w-full items-center justify-center ">
           <div className="relative py-32 lg:py-90 flex w-full flex-col items-center justify-center overflow-hidden bg-background">
             <p className="z-10 whitespace-pre-wrap text-center lg:text-7xl text-3xl font-medium tracking-tighter text-white ">
-              Doğru renk
+              {t('home.ripple1')}
             </p>
             <Ripple />
           </div>
           <div className="relative py-32 lg:py-90  w-full flex-col items-center justify-center overflow-hidden bg-background">
             <p className="z-10 whitespace-pre-wrap text-center lg:text-7xl text-3xl font-medium tracking-tighter text-white">
-              Fark yaratır
+              {t('home.ripple2')}
             </p>
             <Ripple2 />
           </div>
@@ -74,23 +79,10 @@ export default function Home() {
         </div>
         <div className="w-full lg:w-1/2 text-[#969696] text-3xl font-light pt-4 lg:pt-0">
           <TextReveal className="lg:block hidden">
-            Özver Mekatronik 1980’li yıllardan günümüze gelen tecrübesine ve
-            yapmış olduğu arge çalışmalarına dayanarak Tekstil Boya ve Terbiye
-            sektörü için HT Kumaş Boyama, Atmosferik Boyama, İplik Boyama
-            Makineleri ve İplik Boya ekipmanları imalatının ( Kilit, Taşıyıcı,
-            Perfore) yanı sıra gıda, kimya, ilaç sanayi ve diğer sektörlerde de
-            ihtiyaç duyulan paslanmaz ünitelerin proje, imalat ve montaj
-            taleplerine de yanıt vermektedir.
+            {t('home.about.description')}
           </TextReveal>
           <p className="text-[#969696] w-full text-xl block lg:hidden">
-            Özver Mekatronik 1980’li yıllardan günümüze gelen tecrübesine ve
-            yapmış olduğu arge çalışmalarına dayanarak Tekstil Boya ve Terbiye
-            sektörü için HT Kumaş Boyama, Atmosferik Boyama, İplik Boyama
-            Makineleri ve İplik Boya ekipmanları imalatının ( Kilit, Taşıyıcı,
-            Perfore) yanı sıra gıda, kimya, ilaç sanayi ve diğer sektörlerde de
-            ihtiyaç duyulan paslanmaz ünitelerin proje, imalat ve montaj
-            taleplerine de yanıt vermektedir.
-
+            {t('home.about.description')}
           </p>
         </div>
       </section>
@@ -102,7 +94,12 @@ export default function Home() {
       <Footer />
 
       <div className="fixed bottom-10 right-10 z-999">
-        <button className="cursor-pointer bg-[#0F0F0F] shadow-2xl backdrop-blur-md rounded-full px-3 py-2 gap-2 flex items-center justify-center  border">
+        <a 
+          href="https://wa.me/905558596555" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="cursor-pointer bg-[#0F0F0F] shadow-2xl backdrop-blur-md rounded-full px-3 py-2 gap-2 flex items-center justify-center border hover:bg-[#1a1a1a] transition-colors"
+        >
           <svg
             width="32px"
             height="32px"
@@ -131,8 +128,8 @@ export default function Home() {
               </g>
             </g>
           </svg>
-          <span className="text-white text-md">Bize ulaşın</span>
-        </button>
+          <span className="text-white text-md">{t('home.whatsapp')}</span>
+        </a>
       </div>
     </div>
   );

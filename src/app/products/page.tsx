@@ -15,6 +15,8 @@ import MobileMenu from "@/components/ui/mobile-menu";
 import { Footer } from "@/components/ui/footer";
 import { getCategories } from "@/lib/supabaseClient";
 import { Comments } from "@/components/ui/comments";
+import { LanguageSelector } from "@/components/ui/language-selector";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Category {
   id: string;
@@ -30,6 +32,7 @@ interface Category {
 export default function ProductsPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useLanguage();
 
   // Fetch categories from Supabase
   useEffect(() => {
@@ -49,10 +52,10 @@ export default function ProductsPage() {
 
   // Navigation items
   const navItems = [
-    { name: "Ana Sayfa", link: "/" },
-    { name: "Hakkımızda", link: "/about" },
-    { name: "Ürünler", link: "/products" },
-    { name: "İletişim", link: "/contact" },
+    { name: t('nav.home'), link: "/" },
+    { name: t('nav.about'), link: "/about" },
+    { name: t('nav.products'), link: "/products" },
+    { name: t('nav.contact'), link: "/contact" },
   ];
 
   return (
@@ -76,9 +79,10 @@ export default function ProductsPage() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center space-x-2">
+            <LanguageSelector />
             <ShimmerButton className="shadow-2xl">
               <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-md">
-                Kalite ve Güven
+                {t('nav.quality')}
               </span>
             </ShimmerButton>
           </div>
@@ -97,10 +101,10 @@ export default function ProductsPage() {
           className="text-center mb-16"
         >
           <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-white via-gray-300 to-gray-400 bg-clip-text text-transparent mt-6">
-            Ürün Kategorileri
+            {t('products.title')}
           </h1>
           <p className=" text-xs mt-6 pt-4 lg:mt-0 lg:text-md text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Endüstriyel çözümlerimizi keşfedin. Her kategori için özel olarak <br /> tasarlanmış ürünlerimizi inceleyin.
+            {t('products.subtitle')}
           </p>
 
         </motion.div>
@@ -145,7 +149,7 @@ export default function ProductsPage() {
                     
                     {/* Category Description */}
                     <p className="text-gray-400 text-sm">
-                      Bu kategoriye ait ürünleri görüntülemek için tıklayın
+                      {t('products.viewProducts')}
                     </p>
                   </div>
                 </Link>
@@ -167,8 +171,8 @@ export default function ProductsPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-white mb-2">Henüz kategori bulunmuyor</h3>
-            <p className="text-gray-400">Yakında yeni kategoriler eklenecek.</p>
+            <h3 className="text-xl font-semibold text-white mb-2">{t('products.empty')}</h3>
+            <p className="text-gray-400">{t('products.loading')}</p>
           </motion.div>
         )}
       </div>
@@ -176,7 +180,12 @@ export default function ProductsPage() {
       {/* Footer */}
       <Footer />
       <div className="fixed bottom-10 right-10 z-999">
-        <button className="cursor-pointer bg-[#0F0F0F] shadow-2xl backdrop-blur-md rounded-full px-3 py-2 gap-2 flex items-center justify-center border">
+      <a 
+          href="https://wa.me/905558596555" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="cursor-pointer bg-[#0F0F0F] shadow-2xl backdrop-blur-md rounded-full px-3 py-2 gap-2 flex items-center justify-center border hover:bg-[#1a1a1a] transition-colors"
+        >
           <svg
             width="32px"
             height="32px"
@@ -205,8 +214,8 @@ export default function ProductsPage() {
               </g>
             </g>
           </svg>
-          <span className="text-white text-md">Bize ulaşın</span>
-        </button>
+          <span className="text-white text-md">{t('home.whatsapp')}</span>
+        </a>
       </div>
     </div>
   );

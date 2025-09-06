@@ -14,6 +14,9 @@ import MobileMenu from "@/components/ui/mobile-menu";
 import { Footer } from "@/components/ui/footer";
 import { getContactInfo, submitContactForm } from "@/lib/supabaseClient";
 import { Comments } from "@/components/ui/comments";
+import { LanguageSelector } from "@/components/ui/language-selector";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { DarkMap } from "@/components/ui/dark-map";
 
 interface ContactInfo {
   id: string;
@@ -37,6 +40,7 @@ export default function ContactPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const { t } = useLanguage();
 
   // Fetch contact info from Supabase
   useEffect(() => {
@@ -56,10 +60,10 @@ export default function ContactPage() {
 
   // Navigation items
   const navItems = [
-    { name: "Ana Sayfa", link: "/" },
-    { name: "Hakkımızda", link: "/about" },
-    { name: "Ürünler", link: "/products" },
-    { name: "İletişim", link: "/contact" },
+    { name: t('nav.home'), link: "/" },
+    { name: t('nav.about'), link: "/about" },
+    { name: t('nav.products'), link: "/products" },
+    { name: t('nav.contact'), link: "/contact" },
   ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -118,9 +122,10 @@ export default function ContactPage() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center space-x-2">
+            <LanguageSelector />
             <ShimmerButton className="shadow-2xl">
               <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-md">
-                Kalite ve Güven
+                {t('nav.quality')}
               </span>
             </ShimmerButton>
           </div>
@@ -141,10 +146,10 @@ export default function ContactPage() {
           className="text-center mb-16"
         >
                      <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-white via-gray-300 to-gray-400 bg-clip-text text-transparent mt-6">
-            İletişim
+            {t('contact.title')}
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            Bizimle iletişime geçin. Projeleriniz için en iyi çözümleri sunmaya hazırız.
+            {t('contact.subtitle')}
           </p>
         </motion.div>
 
@@ -158,7 +163,7 @@ export default function ContactPage() {
           >
                          <h2 className="text-3xl font-bold text-white mb-8 flex items-center gap-3">
                <Send className="w-8 h-8 text-gray-400" />
-               Mesaj Gönderin
+               {t('contact.form.submit')}
              </h2>
             
             {/* Success Message */}
@@ -175,7 +180,7 @@ export default function ContactPage() {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </div>
-                  Mesajınız başarıyla gönderildi! En kısa sürede size dönüş yapacağız.
+                  {t('contact.form.success')}
                 </div>
               </motion.div>
             )}
@@ -184,7 +189,7 @@ export default function ContactPage() {
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Ad Soyad
+                    {t('contact.form.name')}
                   </label>
                                      <input
                      type="text"
@@ -193,13 +198,13 @@ export default function ContactPage() {
                      onChange={handleInputChange}
                      required
                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all duration-300"
-                     placeholder="Adınız ve soyadınız"
+                     placeholder={t('contact.form.name')}
                    />
                 </div>
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    E-posta
+                    {t('contact.form.email')}
                   </label>
                                      <input
                      type="email"
@@ -208,14 +213,14 @@ export default function ContactPage() {
                      onChange={handleInputChange}
                      required
                      className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all duration-300"
-                     placeholder="ornek@email.com"
+                     placeholder={t('contact.form.email')}
                    />
                 </div>
               </div>
               
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Telefon
+                  {t('contact.form.phone')}
                 </label>
                                  <input
                    type="tel"
@@ -223,13 +228,13 @@ export default function ContactPage() {
                    value={formData.phone}
                    onChange={handleInputChange}
                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all duration-300"
-                   placeholder="05XX XXX XXXX"
+                   placeholder={t('contact.form.phone')}
                  />
               </div>
               
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Konu
+                  {t('contact.form.subject')}
                 </label>
                                  <input
                    type="text"
@@ -238,13 +243,13 @@ export default function ContactPage() {
                    onChange={handleInputChange}
                    required
                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all duration-300"
-                   placeholder="Mesajınızın konusu"
+                   placeholder={t('contact.form.subject')}
                  />
               </div>
               
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Mesaj
+                  {t('contact.form.message')}
                 </label>
                                  <textarea
                    name="message"
@@ -253,7 +258,7 @@ export default function ContactPage() {
                    required
                    rows={5}
                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all duration-300 resize-none"
-                   placeholder="Mesajınızı buraya yazın..."
+                   placeholder={t('contact.form.message')}
                  />
               </div>
               
@@ -265,12 +270,12 @@ export default function ContactPage() {
                 {isSubmitting ? (
                   <>
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    Gönderiliyor...
+                    {t('contact.form.loading')}
                   </>
                 ) : (
                   <>
                     <Send className="w-5 h-5" />
-                    Mesaj Gönder
+                    {t('contact.form.submit')}
                   </>
                 )}
               </button>
@@ -292,9 +297,9 @@ export default function ContactPage() {
                     <MapPin className="w-6 h-6 text-white" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-white">Adres</h3>
+                    <h3 className="text-lg font-semibold text-white">{t('contact.address')}</h3>
                     <p className="text-gray-300">
-                      {loading ? "Yükleniyor..." : contactInfo?.address || "Adres bilgisi bulunamadı"}
+                      {loading ? t('common.loading') : contactInfo?.address || t('contact.address')}
                     </p>
                   </div>
                   <button
@@ -303,7 +308,7 @@ export default function ContactPage() {
                     className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2 rounded-lg transition-all duration-300 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Navigation className="w-4 h-4" />
-                    Yol Tarifi
+                    {t('contact.directions')}
                   </button>
                 </div>
               </div>
@@ -314,9 +319,9 @@ export default function ContactPage() {
                     <Phone className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white">Telefon</h3>
+                    <h3 className="text-lg font-semibold text-white">{t('contact.phone')}</h3>
                     <p className="text-gray-300">
-                      {loading ? "Yükleniyor..." : contactInfo?.phone || "Telefon bilgisi bulunamadı"}
+                      {loading ? t('common.loading') : contactInfo?.phone || t('contact.phone')}
                     </p>
                   </div>
                 </div>
@@ -328,9 +333,9 @@ export default function ContactPage() {
                     <Mail className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white">E-posta</h3>
+                    <h3 className="text-lg font-semibold text-white">{t('contact.email')}</h3>
                     <p className="text-gray-300">
-                      {loading ? "Yükleniyor..." : contactInfo?.email || "E-posta bilgisi bulunamadı"}
+                      {loading ? t('common.loading') : contactInfo?.email || t('contact.email')}
                     </p>
                   </div>
                 </div>
@@ -342,44 +347,22 @@ export default function ContactPage() {
                     <Clock className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-white">Çalışma Saatleri</h3>
+                    <h3 className="text-lg font-semibold text-white">{t('contact.hours')}</h3>
                     <p className="text-gray-300">
-                      {loading ? "Yükleniyor..." : contactInfo?.hours || "08:00 - 17:00"}
+                      {loading ? t('common.loading') : contactInfo?.hours || "08:00 - 17:00"}
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Dark Map */}
+            {/* Dark Mode Map */}
             <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
               <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                 <Building2 className="w-5 h-5 text-[#2C308D]" />
                 Konum
               </h3>
-              <div className="relative h-64 rounded-xl overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 border border-white/10">
-                {/* Map Placeholder - İstanbul coordinates */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-gradient-to-br from-gray-600 to-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <MapPin className="w-8 h-8 text-white" />
-                    </div>
-                    <p className="text-white font-medium">İstanbul, Türkiye</p>
-                    <p className="text-gray-400 text-sm">41.0082° N, 28.9784° E</p>
-                  </div>
-                </div>
-                
-                {/* Map Grid Lines */}
-                <div className="absolute inset-0 opacity-20">
-                  <div className="w-full h-full" style={{
-                    backgroundImage: `
-                      linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-                    `,
-                    backgroundSize: '20px 20px'
-                  }} />
-                </div>
-              </div>
+              <DarkMap height="h-64" className="border border-white/10" />
             </div>
           </motion.div>
         </div>
@@ -389,7 +372,12 @@ export default function ContactPage() {
       {/* Footer */}
       <Footer />
           <div className="fixed bottom-10 right-10 z-999">
-        <button className="cursor-pointer bg-[#0F0F0F] shadow-2xl backdrop-blur-md rounded-full px-3 py-2 gap-2 flex items-center justify-center  border">
+          <a 
+          href="https://wa.me/905558596555" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="cursor-pointer bg-[#0F0F0F] shadow-2xl backdrop-blur-md rounded-full px-3 py-2 gap-2 flex items-center justify-center border hover:bg-[#1a1a1a] transition-colors"
+        >
           <svg
             width="32px"
             height="32px"
@@ -418,8 +406,8 @@ export default function ContactPage() {
               </g>
             </g>
           </svg>
-          <span className="text-white text-md">Bize ulaşın</span>
-        </button>
+          <span className="text-white text-md">{t('home.whatsapp')}</span>
+        </a>
       </div>
     </div>
   );

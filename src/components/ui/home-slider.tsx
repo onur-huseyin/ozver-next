@@ -2,8 +2,11 @@
 
 import * as React from "react";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function WavyBackgroundDemo() {
+  const { t, } = useLanguage();
+  
   return (
     <section className="pb-20 pt-36 md:pb-32 md:pt-48">
       <div className="container mx-auto sm:px-6 lg:px-8">
@@ -11,19 +14,20 @@ export function WavyBackgroundDemo() {
           {/* Left Content */}
           <div>
             <h1 className="font-bold leading-tight text-4xl md:text-7xl tracking-tighter">
-              Tekstil makinalarında kalite adresi{" "}
+              {t('home.hero.title')}{" "}
               <div className="relative inline-flex">
                 <span className="absolute inset-x-0 bottom-0 border-b-[30px] border-blue-800"></span>
                 <span className="relative">ÖZVER.</span>
               </div>
+
             </h1>
             <p className="mt-8 text-sm font-normal sm:text-2xl text-[#83838367]">
-              Bobin Boyama, Numune Bobin Boyama, Elyaf Kurutma, <br /> Rota-Dye Kumaş Boyama, Santrifüj
+              {t('home.hero.subtitle')}
             </p>
  
             <div className="mt-10 sm:flex sm:items-center sm:space-x-8">
               <ShimmerButton>
-               <span className="text-white">%100 Garanti, %100 Kalite</span>
+               <span className="text-white">{t('home.hero.button')}</span>
               </ShimmerButton>
             </div>
           </div>

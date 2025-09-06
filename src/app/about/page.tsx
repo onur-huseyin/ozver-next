@@ -23,6 +23,7 @@ import {
 import { AboutTime } from "@/components/ui/about-time";
 import { Comments } from "@/components/ui/comments";
 import MobileMenu from "@/components/ui/mobile-menu";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const navItems = [
   { name: "Ana Sayfa", link: "/" },
@@ -32,7 +33,7 @@ const navItems = [
 ];
 
 export default function AboutPage() {
-
+  const { t } = useLanguage();
   const stats = [
     { label: "Yıllık Deneyim", value: "40+", icon: IconAward },
     { label: "Müşteri Sayısı", value: "500+", icon: IconUsers },
@@ -182,7 +183,12 @@ export default function AboutPage() {
 
       <Footer />
           <div className="fixed bottom-10 right-10 z-999">
-        <button className="cursor-pointer bg-[#0F0F0F] shadow-2xl backdrop-blur-md rounded-full px-3 py-2 gap-2 flex items-center justify-center  border">
+          <a 
+          href="https://wa.me/905558596555" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="cursor-pointer bg-[#0F0F0F] shadow-2xl backdrop-blur-md rounded-full px-3 py-2 gap-2 flex items-center justify-center border hover:bg-[#1a1a1a] transition-colors"
+        >
           <svg
             width="32px"
             height="32px"
@@ -211,8 +217,8 @@ export default function AboutPage() {
               </g>
             </g>
           </svg>
-          <span className="text-white text-md">Bize ulaşın</span>
-        </button>
+          <span className="text-white text-md">{t('home.whatsapp')}</span>
+        </a>
       </div>
     </div>
   );

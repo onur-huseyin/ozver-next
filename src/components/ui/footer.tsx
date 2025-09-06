@@ -1,6 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function Footer() {
+  const { t } = useLanguage();
+  
   return (
     <footer className="relative min-h-[400px] bg-black lg:py-16 lg:pt-36">
       {/* Gradient Background Overlay */}
@@ -22,42 +26,42 @@ export function Footer() {
 
             {/* Product Column */}
             <div className="flex flex-col space-y-4 z-10">
-              <h3 className="text-white font-semibold text-lg mb-2">Ürünler</h3>
+              <h3 className="text-white font-semibold text-lg mb-2">{t('footer.products.title')}</h3>
               <div className="space-y-2">
-                <a href="/products" className="text-slate-300 hover:text-white transition-colors text-sm block">
-                  Pompalar
-                </a>
-                <a href="/products" className="text-slate-300 hover:text-white transition-colors text-sm block">
-                  Motorlar
-                </a>
-                <a href="/products" className="text-slate-300 hover:text-white transition-colors text-sm block">
-                  Kontrol Sistemleri
-                </a>
-                <a href="/products" className="text-slate-300 hover:text-white transition-colors text-sm block">
-                  Sensörler
-                </a>
-                <a href="/products" className="text-slate-300 hover:text-white transition-colors text-sm block">
-                  Otomasyon
-                </a>
+                <Link href="/products" className="text-slate-300 hover:text-white transition-colors text-sm block">
+                  {t('footer.products.pumps')}
+                </Link>
+                <Link href="/products" className="text-slate-300 hover:text-white transition-colors text-sm block">
+                  {t('footer.products.motors')}
+                </Link>
+                <Link href="/products" className="text-slate-300 hover:text-white transition-colors text-sm block">
+                  {t('footer.products.control')}
+                </Link>
+                <Link href="/products" className="text-slate-300 hover:text-white transition-colors text-sm block">
+                  {t('footer.products.sensors')}
+                </Link>
+                <Link href="/products" className="text-slate-300 hover:text-white transition-colors text-sm block">
+                  {t('footer.products.automation')}
+                </Link>
               </div>
             </div>
 
             {/* Resources Column */}
             <div className="flex flex-col space-y-4">
-              <h3 className="text-white font-semibold text-lg mb-2">Hizmetler</h3>
+              <h3 className="text-white font-semibold text-lg mb-2">{t('footer.services.title')}</h3>
               <div className="space-y-2">
-                <a href="/about" className="text-slate-300 hover:text-white transition-colors text-sm block">
-                  Teknik Destek
-                </a>
-                <a href="/about" className="text-slate-300 hover:text-white transition-colors text-sm block">
-                  Bakım & Onarım
-                </a>
-                <a href="/about" className="text-slate-300 hover:text-white transition-colors text-sm block">
-                  Eğitim
-                </a>
-                <a href="/about" className="text-slate-300 hover:text-white transition-colors text-sm block">
-                  Danışmanlık
-                </a>
+                <Link href="/about" className="text-slate-300 hover:text-white transition-colors text-sm block">
+                  {t('footer.services.support')}
+                </Link>
+                <Link href="/about" className="text-slate-300 hover:text-white transition-colors text-sm block">
+                  {t('footer.services.maintenance')}
+                </Link>
+                <Link href="/about" className="text-slate-300 hover:text-white transition-colors text-sm block">
+                  {t('footer.services.training')}
+                </Link>
+                <Link href="/about" className="text-slate-300 hover:text-white transition-colors text-sm block">
+                  {t('footer.services.consulting')}
+                </Link>
 
               </div>
             </div>
@@ -65,16 +69,16 @@ export function Footer() {
 
             {/* Connect Column */}
             <div className="flex flex-col space-y-4">
-              <h3 className="text-white font-semibold text-lg mb-2">Connect</h3>
+              <h3 className="text-white font-semibold text-lg mb-2">{t('footer.connect.title')}</h3>
               <div className="space-y-2">
                 <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm block  items-center">
-                  Contact
+                  {t('footer.connect.contact')}
                   <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M7 17l9.2-9.2M17 17V7H7"/>
                   </svg>
                 </a>
                 <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm block">
-                  Forum
+                  {t('footer.connect.forum')}
                 </a>
               </div>
             </div>
@@ -84,8 +88,8 @@ export function Footer() {
           <div className=" pt-6">
             <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
               <div className="text-slate-400 text-sm text-center md:text-left">
-                <p>Tüm ürün isimleri, logolar ve markalar ilgili sahiplerinin mülkiyetindedir.</p>
-                <p className="mt-1">Copyright © 2025 Özver Mekatronik</p>
+                <p>{t('footer.copyright.text')}</p>
+                <p className="mt-1">{t('footer.copyright.rights')}</p>
               </div>
               <div className="flex items-center space-x-2">
                 <span className="text-slate-400 text-sm">by</span>

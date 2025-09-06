@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Home, Info, Package, Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { LanguageSelector } from "@/components/ui/language-selector";
 
 interface MobileMenuProps {
   className?: string;
@@ -16,31 +18,32 @@ interface MenuItem {
   icon: React.ReactNode;
 }
 
-const menuItems: MenuItem[] = [
-  {
-    name: "Ana Sayfa",
-    link: "/",
-    icon: <Home className="w-5 h-5" />
-  },
-  {
-    name: "Hakkımızda",
-    link: "/about",
-    icon: <Info className="w-5 h-5" />
-  },
-  {
-    name: "Ürünler",
-    link: "/products",
-    icon: <Package className="w-5 h-5" />
-  },
-  {
-    name: "İletişim",
-    link: "/contact",
-    icon: <Phone className="w-5 h-5" />
-  }
-];
-
 export default function MobileMenu({ className = "" }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useLanguage();
+
+  const menuItems: MenuItem[] = [
+    {
+      name: t('nav.home'),
+      link: "/",
+      icon: <Home className="w-5 h-5" />
+    },
+    {
+      name: t('nav.about'),
+      link: "/about",
+      icon: <Info className="w-5 h-5" />
+    },
+    {
+      name: t('nav.products'),
+      link: "/products",
+      icon: <Package className="w-5 h-5" />
+    },
+    {
+      name: t('nav.contact'),
+      link: "/contact",
+      icon: <Phone className="w-5 h-5" />
+    }
+  ];
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -94,7 +97,7 @@ export default function MobileMenu({ className = "" }: MobileMenuProps) {
           {/* Menu Button */}
           <button
             onClick={toggleMenu}
-            className="relative p-3 rounded-xl bg-gradient-to-r from-blue-600/20 to-blue-700/20 backdrop-blur-sm border border-blue-500/30 hover:from-blue-600/30 hover:to-blue-700/30 transition-all duration-300 shadow-lg"
+            className="relative p-3 rounded-xl bg-transparent border border-[#2C308D] transition-all duration-300 shadow-lg"
             aria-label="Menüyü aç"
           >
             <motion.div
@@ -188,10 +191,10 @@ export default function MobileMenu({ className = "" }: MobileMenuProps) {
                              {item.name}
                            </h3>
                            <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors">
-                             {item.link === "/" && "Ana sayfaya dön"}
-                             {item.link === "/about" && "Şirket hakkında bilgi"}
-                             {item.link === "/products" && "Ürün kataloğumuz"}
-                             {item.link === "/contact" && "İletişim bilgileri"}
+                             {item.link === "/" && t('nav.home')}
+                             {item.link === "/about" && t('nav.about')}
+                             {item.link === "/products" && t('nav.products')}
+                             {item.link === "/contact" && t('nav.contact')}
                            </p>
                          </div>
                          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -204,41 +207,18 @@ export default function MobileMenu({ className = "" }: MobileMenuProps) {
                   ))}
                 </div>
 
-                                 {/* Contact Info */}
+                                 {/* Language Selector */}
                  <motion.div
                    initial={{ opacity: 0, y: 20 }}
                    animate={{ opacity: 1, y: 0 }}
-                   transition={{ delay: 0.8, duration: 0.5 }}
-                   className="mt-8 text-center"
+                   transition={{ delay: 0.6, duration: 0.5 }}
+                   className="mt-8 text-center w-full"
                  >
-                   <div className="p-8 rounded-3xl bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl">
-                     <h4 className="text-xl font-bold text-white mb-2">
-                       Özver Mekatronik
-                     </h4>
-                     <p className="text-gray-300 text-sm mb-6">
-                       Kaliteli hizmet, güvenilir çözümler
-                     </p>
-                     <div className="flex justify-center gap-6">
-                       <a
-                         href="tel:+905558596555"
-                         className="group p-4 rounded-2xl bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
-                         aria-label="Telefon"
-                       >
-                         <Phone className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-300" />
-                       </a>
-                       <a
-                         href="mailto:ozver@ozver.com"
-                         className="group p-4 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
-                         aria-label="E-posta"
-                       >
-                         <svg className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-300" fill="currentColor" viewBox="0 0 20 20">
-                           <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                           <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                         </svg>
-                       </a>
-                     </div>
+                   <div className="p-6 rounded-xl w-full bg-gradient-to-r from-white/10 to-white/5 backdrop-blur-sm border border-white/20 shadow-2xl">
+                     <LanguageSelector />
                    </div>
                  </motion.div>
+
               </div>
             </motion.div>
           </>

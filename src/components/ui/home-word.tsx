@@ -1,15 +1,18 @@
 "use client";
+import { useLanguage } from "@/contexts/LanguageContext";
 import WorldMap from "@/components/ui/world-map";
 
 export function HomeWord() {
+  const { t } = useLanguage();
+  
   return (
     <div className=" py-4 lg:pt-40 pb-0 w-full">
       <div className="w-full mx-auto text-center">
         <p className="font-bold text-xl md:text-4xl dark:text-white text-black">
-         24 ülke için ÖZVER MEKATRONİK
+         {t('home.world.title')}
         </p>
         <p className="text-sm md:text-lg text-neutral-500 max-w-2xl mx-auto py-4">
-          Uzman kadromuzla uzun ömürlü makineler imal edip, global pazarlarımızda hizmet vermekteyiz.
+          {t('home.world.description')}
         </p>
       </div>
       <WorldMap
