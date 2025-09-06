@@ -11,6 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import React, { useRef, useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface NavbarProps {
   children: React.ReactNode;
@@ -116,6 +117,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
 
 export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
   const [hovered, setHovered] = useState<number | null>(null);
+  const { t } = useLanguage();
 
   return (
     <motion.div
@@ -139,7 +141,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
               className="absolute inset-0 h-full w-full rounded-full bg-gray-100 dark:bg-neutral-800"
             />
           )}
-          <span className="relative z-20">{item.name}</span>
+          <span className="relative z-20">{t(item.name)}</span>
         </a>
       ))}
     </motion.div>

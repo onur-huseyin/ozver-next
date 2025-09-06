@@ -10,6 +10,7 @@ import { Footer } from "@/components/ui/footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ShimmerButton } from "@/components/magicui/shimmer-button";
 import { Badge } from "@/components/ui/badge";
+import { LanguageSelector } from "@/components/ui/language-selector";
 
 import { 
   IconAward, 
@@ -26,41 +27,41 @@ import MobileMenu from "@/components/ui/mobile-menu";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const navItems = [
-  { name: "Ana Sayfa", link: "/" },
-  { name: "Hakkımızda", link: "/about" },
-  { name: "Ürünler", link: "/products" },
-  { name: "İletişim", link: "/contact" },
+  { name: "nav.home", link: "/" },
+  { name: "nav.about", link: "/about" },
+  { name: "nav.products", link: "/products" },
+  { name: "nav.contact", link: "/contact" },
 ];
 
 export default function AboutPage() {
   const { t } = useLanguage();
   const stats = [
-    { label: "Yıllık Deneyim", value: "40+", icon: IconAward },
-    { label: "Müşteri Sayısı", value: "500+", icon: IconUsers },
-    { label: "Ülke Sayısı", value: "25+", icon: IconGlobe },
-    { label: "Proje Tamamlandı", value: "1000+", icon: IconTarget },
+    { label: t('about.stats.experience'), value: t('about.stats.experience.value'), icon: IconAward },
+    { label: t('about.stats.customers'), value: t('about.stats.customers.value'), icon: IconUsers },
+    { label: t('about.stats.countries'), value: t('about.stats.countries.value'), icon: IconGlobe },
+    { label: t('about.stats.projects'), value: t('about.stats.projects.value'), icon: IconTarget },
   ];
 
   const values = [
     {
       icon: IconHeart,
-      title: "Müşteri Odaklılık",
-      description: "Müşterilerimizin ihtiyaçlarını en iyi şekilde anlayarak, onlara özel çözümler sunuyoruz."
+      title: t('about.values.customer.title'),
+      description: t('about.values.customer.description')
     },
     {
       icon: IconShield,
-      title: "Kalite Güvencesi",
-      description: "Her projede en yüksek kalite standartlarını koruyarak, güvenilir hizmet sağlıyoruz."
+      title: t('about.values.quality.title'),
+      description: t('about.values.quality.description')
     },
     {
       icon: IconTools,
-      title: "Teknolojik Yenilik",
-      description: "Sürekli gelişen teknolojileri takip ederek, en güncel çözümleri müşterilerimize sunuyoruz."
+      title: t('about.values.innovation.title'),
+      description: t('about.values.innovation.description')
     },
     {
       icon: IconTarget,
-      title: "Sürdürülebilirlik",
-      description: "Çevre dostu ve sürdürülebilir teknolojiler geliştirerek geleceğe yatırım yapıyoruz."
+      title: t('about.values.sustainability.title'),
+      description: t('about.values.sustainability.description')
     }
   ];
 
@@ -86,9 +87,10 @@ export default function AboutPage() {
           <NavbarLogo />
           <NavItems items={navItems} />
           <div className="flex items-center space-x-2">
+            <LanguageSelector />
             <ShimmerButton className="shadow-2xl">
               <span className="whitespace-pre-wrap text-center text-sm font-medium leading-none tracking-tight text-white dark:from-white dark:to-slate-900/10 lg:text-md">
-                Kalite ve Güven
+                {t('nav.quality')}
               </span>
             </ShimmerButton>
           </div>
@@ -107,14 +109,13 @@ export default function AboutPage() {
           className="text-center mb-16"
         >
           <Badge variant="secondary" className="mb-4">
-            Hakkımızda
+            {t('about.badge')}
           </Badge>
           <h1 className="text-4xl md:text-6xl font-bold mb-6  text-[#2C308D]">
-            Tarihçe
+            {t('about.title')}
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            1980 yılından bu yana tekstil makineleri sektöründe faaliyet gösteren Özver Mekatronik, 
-            müşterilerine en kaliteli hizmeti sunmaya devam ediyor.
+            {t('about.subtitle')}
           </p>
         </motion.div>
 
@@ -138,7 +139,7 @@ export default function AboutPage() {
           className="mb-16"
         >
           <Comments />
-          <h2 className="text-3xl font-bold text-center mb-12">Değerlerimiz</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">{t('about.values.title')}</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => (
               <Card key={index} className="text-center hover:shadow-lg transition-shadow">

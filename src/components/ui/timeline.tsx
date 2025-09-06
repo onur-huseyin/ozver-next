@@ -1,7 +1,8 @@
 import { ArcTimeline, ArcTimelineItem } from "@/components/magicui/arc-timeline";
-
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function Timeline() {
+  const { t } = useLanguage();
   return (
     <ArcTimeline
       // className={cn(
@@ -14,7 +15,7 @@ export function Timeline() {
       //   "[--time-inactive-color:#a3a3a3] dark:[--time-inactive-color:#a3a3a3]",
       //   "[--description-color:#555555] dark:[--description-color:#d4d4d4]"
       // )}
-      data={TIMELINE}
+      data={getTimelineData(t)}
       defaultActiveStep={{ time: "1980", stepIndex: 0 }}
       arcConfig={{
         circleWidth: 4500,
@@ -26,7 +27,7 @@ export function Timeline() {
   );
 }
 
-const TIMELINE: ArcTimelineItem[] = [
+const getTimelineData = (t: (key: string) => string): ArcTimelineItem[] => [
   {
     time: "1980",
     steps: [
@@ -34,8 +35,7 @@ const TIMELINE: ArcTimelineItem[] = [
         icon: <svg width="16px" height="16px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" version="1.1">
           <path style={{ stroke: "#111", strokeWidth: 4, fill: "#ddd" }} d="M 5,5 90,30 65,50 95,80 80,95 50,65 30,90 z"/>
         </svg>,
-        content:
-          "Özver mekatronik kuruldu.",
+        content: t('timeline.1980.content'),
         image: "/history/old1.jpg"
       },
     ],
@@ -47,7 +47,7 @@ const TIMELINE: ArcTimelineItem[] = [
         icon: <svg width="16px" height="16px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" version="1.1">
           <path style={{ stroke: "#111", strokeWidth: 4, fill: "#ddd" }} d="M 5,5 90,30 65,50 95,80 80,95 50,65 30,90 z"/>
         </svg>,
-        content: "Mekanik ve endüstriyel hizmetlerimize başladık.",
+        content: t('timeline.1994.content'),
         image: "/history/old2.jpg"
       },
     ],
@@ -59,8 +59,7 @@ const TIMELINE: ArcTimelineItem[] = [
         icon: <svg width="16px" height="16px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" version="1.1">
           <path style={{ stroke: "#111", strokeWidth: 4, fill: "#ddd" }} d="M 5,5 90,30 65,50 95,80 80,95 50,65 30,90 z"/>
         </svg>,
-        content:
-          "Makinalarımızı üretmeye başladık.",
+        content: t('timeline.2002.content'),
         image: "/history/old3.jpg"
       },
     ],
@@ -72,8 +71,7 @@ const TIMELINE: ArcTimelineItem[] = [
         icon: <svg width="16px" height="16px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" version="1.1">
           <path style={{ stroke: "#111", strokeWidth: 4, fill: "#ddd" }} d="M 5,5 90,30 65,50 95,80 80,95 50,65 30,90 z"/>
         </svg>,
-        content:
-          "Yıllık 100.000 parça üretmeye başladık.",
+        content: t('timeline.2005.content'),
         image: "/history/old6.jpg"
       },
     ],
@@ -85,7 +83,7 @@ const TIMELINE: ArcTimelineItem[] = [
         icon: <svg width="16px" height="16px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" version="1.1">
           <path style={{ stroke: "#111", strokeWidth: 4, fill: "#ddd" }} d="M 5,5 90,30 65,50 95,80 80,95 50,65 30,90 z"/>
         </svg>,
-        content: "Kumaş ve iplik boyama makinelerini üretmeye başladık.",
+        content: t('timeline.2010.content'),
         image: "/history/old5.jpg"
       },
     ],
@@ -97,8 +95,7 @@ const TIMELINE: ArcTimelineItem[] = [
         icon: <svg width="16px" height="16px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" version="1.1">
           <path style={{ stroke: "#111", strokeWidth: 4, fill: "#ddd" }} d="M 5,5 90,30 65,50 95,80 80,95 50,65 30,90 z"/>
         </svg>,
-        content:
-          "Yatırım yapılarımızı başlattık.",
+        content: t('timeline.2017.content'),
         image: "/history/old6.jpg"
       },
     ],
@@ -110,8 +107,7 @@ const TIMELINE: ArcTimelineItem[] = [
         icon: <svg width="16px" height="16px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" version="1.1">
           <path style={{ stroke: "#111", strokeWidth: 4, fill: "#ddd" }} d="M 5,5 90,30 65,50 95,80 80,95 50,65 30,90 z"/>
         </svg>,
-        content:
-          "25 ülkeye yüksek donanımlı ürünlerimizi hizmete sunuyoruz.",
+        content: t('timeline.2020.content'),
         image: "/history/new1.webp"
       },
     ],
@@ -123,7 +119,7 @@ const TIMELINE: ArcTimelineItem[] = [
         icon: <svg width="16px" height="16px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" version="1.1">
           <path style={{ stroke: "#111", strokeWidth: 4, fill: "#ddd" }} d="M 5,5 90,30 65,50 95,80 80,95 50,65 30,90 z"/>
         </svg>,
-        content: "Alanında uzman personelimiz ile 90+ firmaya hizmet veriyoruz.",
+        content: t('timeline.2025.content'),
         image: "/history/new2.jpg"
       },
     ],
